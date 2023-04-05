@@ -1,15 +1,14 @@
 const Post = require('../models/post');
 
 const addData = async (req,res)=>{
-         try {
-
+        try {
             const post = await new Post(req.body);
             const instanceSave = await post.save();
             res.json(instanceSave).status(200);
             
-         }catch(err){
+        }catch(err){
             res.json(err).status(500);
-         }
+        }
         
 }
 
