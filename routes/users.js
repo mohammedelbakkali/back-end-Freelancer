@@ -1,9 +1,14 @@
 var express = require('express');
+var {getOneUser} = require('../controllers/user');
+var {getUserById} = require('../middlewares/user');
+const {requireSignIn , isAuth }=require('../middlewares/auth');
+
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+
+
+router.route('/profile/:id').get(requireSignIn,isAuth,getOneUser);
+router.param('id',getUserById);
+
 
 module.exports = router;

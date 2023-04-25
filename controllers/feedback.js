@@ -8,8 +8,7 @@ const addFeedback = async (req,res)=>{
             
          }catch(err){
             res.json(err).status(500);
-         }
-        
+         }      
 }
 
 const getFeedbacks = async (req,res)=>{

@@ -13,11 +13,7 @@ var http = require('http');
  * connection database
  */
 
-mongoose.connect('mongodb://127.0.0.1/database',).then(()=>{
-                console.log('-> connexion to database ');
-}).catch((err)=>{
-                 console.log(err);
-});
+
 
 
 /**

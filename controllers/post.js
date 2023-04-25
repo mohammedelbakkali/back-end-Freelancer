@@ -5,6 +5,7 @@ const addData = async (req,res)=>{
             const post = await new Post(req.body);
             const instanceSave = await post.save();
             res.json(instanceSave).status(200);
+            return instanceSave;
             
         }catch(err){
             res.json(err).status(500);
@@ -25,7 +26,7 @@ const getAll = async (req,res)=>{
             try{
                 const posts = await Post.find({status : "active"});
                 res.json(posts).status(200);
-
+                return posts;
             }catch(err){
                 res.json(err).status(500);
 
