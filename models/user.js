@@ -4,7 +4,12 @@ const crypto = require('node:crypto'); // crypté la chaine
 
 
 const UserSchema = mongoose.Schema({
-    name: {
+    fullname: {
+        type: String,
+        required: true,
+        trim:true
+      },
+     username: {
         type: String,
         required: true,
         trim:true
@@ -14,6 +19,16 @@ const UserSchema = mongoose.Schema({
         required: true,
         unique: true ,
         trim:true
+      },
+      dateOfBirth :
+      {
+         type : Date,
+         required :true
+      },
+      gender : {
+          type : String,
+          required :true,
+          enum:[ "male" , "female" , "other" ]
       },
       hashed_password :{
           type:String,

@@ -30,7 +30,7 @@ const signUp = async (req,res)=>{
            })
   
            }else {
-             const token = jsonWebToken.sign({_id:user._id , role : user.role} ,process.env.JWT_SECRET );
+             const token = jsonWebToken.sign({_id:user._id} ,process.env.JWT_SECRET );
              res.cookie('token',token,{expire:new Date +100000});
              return res.json({ token , user:{_id:user._id,email:user.email,name:user.email}})
 
