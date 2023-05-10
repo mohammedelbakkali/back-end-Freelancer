@@ -7,6 +7,14 @@ const { ApolloServer } = require("@apollo/server");
 var postRouter = require('./routes/post')
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
+
+
+
+var languageRouter = require('./routes/language');
+var skillRouter = require('./routes/skill');
+var educationRouter = require('./routes/education');
+var certificationRouter = require('./routes/certification');
+
 var http = require('http');
 var app = express();
 
@@ -43,6 +51,10 @@ app.use(cors());
 app.use('/auth',authRouter);
 app.use('/post', postRouter);
 app.use('/users', usersRouter);
+app.use('/language',languageRouter);
+app.use('/skill', skillRouter);
+app.use('/education', educationRouter);
+app.use('/certification', certificationRouter);
 
 
 
