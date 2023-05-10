@@ -11,6 +11,14 @@ var categoryRouter = require('./routes/category');
 var subCategoryRouter = require('./routes/subCategory');
 var packRouter = require('./routes/pack');
 
+
+
+
+var languageRouter = require('./routes/language');
+var skillRouter = require('./routes/skill');
+var educationRouter = require('./routes/education');
+var certificationRouter = require('./routes/certification');
+
 var http = require('http');
 var app = express();
 
@@ -50,6 +58,13 @@ app.use('/users', usersRouter);
 app.use('/category',categoryRouter);
 app.use('/subcategory',subCategoryRouter);
 app.use('/pack',packRouter);
+
+app.use('/language',languageRouter);
+app.use('/skill', skillRouter);
+app.use('/education', educationRouter);
+app.use('/certification', certificationRouter);
+
+
 
 const httpServer = http.createServer(app);
 

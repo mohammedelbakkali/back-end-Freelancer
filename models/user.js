@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid'); // crée la chaine unique 
 const crypto = require('node:crypto'); // crypté la chaine 
 
-
 const UserSchema = mongoose.Schema({
     fullname: {
         type: String,
@@ -40,7 +39,29 @@ const UserSchema = mongoose.Schema({
         type:Number,
         enum:[ 0 , 1 , 2 ],
         default:0
-      }
+      },
+      displayedName: String,
+      description:{
+          type:String
+      },
+      languages:[{  //each user can have 0 or more languages
+          type: mongoose.Schema.Types.ObjectId,
+          ref:'Language'
+      }],
+      skills:[{     //each user can have 0 or more skills
+          type: mongoose.Schema.Types.ObjectId,
+          ref:'Skill'
+      }],
+      education:[{  //each user can have 0 or more education diplomas
+          type: mongoose.Schema.Types.ObjectId,
+          ref:'Education'
+      }],
+      certifications:[{ //each user can have 0 or more certificates
+          type: mongoose.Schema.Types.ObjectId,
+          ref:'Certification'
+      }],
+     
+
     
 },  { timestamps: true })
 
@@ -56,7 +77,7 @@ UserSchema.methods ={
   authenticate : function(plainText) {
     
     return this.cryptPassword(plainText) == this.hashed_password;
-    
+
   },
 
     cryptPassword : function(password){
@@ -73,4 +94,5 @@ UserSchema.methods ={
         
         }
         
-module.exports = mongoose.model('user', UserSchema);
+const User = mongoose.model('User', UserSchema);
+module.exports = User;
