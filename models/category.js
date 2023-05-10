@@ -5,9 +5,17 @@ const categorySchema = mongoose.Schema({
     name : {
         type : String,
         required : true
-    }
-});
+    },
+    subCategoryListId: [ 
 
-const Category = mongoose.model('Category',postSchema);
+        {  
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'SubCategory',
+        }
+
+        ]
+}, { timestamps: true });
+
+const Category = mongoose.model('Category',categorySchema);
 
 module.exports = Category;

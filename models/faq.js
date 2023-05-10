@@ -12,7 +12,7 @@ const faqSchema = mongoose.Schema({
         minlength : 5,
         maxlenght: 300
     }
-});
+}, { timestamps: true });
 
 const Faq = mongoose.model('Faq',postSchema);
 

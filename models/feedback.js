@@ -21,7 +21,7 @@ const feedbackSchema = mongoose.Schema({
             type: Date,
             default: Date.now()
         }
-});
+},  { timestamps: true });
 
 const Feedback = mongoose.model('Feedback',postSchema);
 

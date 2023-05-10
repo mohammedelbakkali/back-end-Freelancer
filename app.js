@@ -7,6 +7,10 @@ const { ApolloServer } = require("@apollo/server");
 var postRouter = require('./routes/post')
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
+var categoryRouter = require('./routes/category');
+var subCategoryRouter = require('./routes/subCategory');
+var packRouter = require('./routes/pack');
+
 var http = require('http');
 var app = express();
 
@@ -43,8 +47,9 @@ app.use(cors());
 app.use('/auth',authRouter);
 app.use('/post', postRouter);
 app.use('/users', usersRouter);
-
-
+app.use('/category',categoryRouter);
+app.use('/subcategory',subCategoryRouter);
+app.use('/pack',packRouter);
 
 const httpServer = http.createServer(app);
 

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Post = require('../models/post')
 
 const packsSchema = mongoose.Schema({
         type : {
@@ -18,17 +18,30 @@ const packsSchema = mongoose.Schema({
             maxlength : 100,  
         },
         deliveryTime : {
-            type : Number,
-            required : true,
+            type : Date,
+          
             min : 1
         },
         price : {
             type : Number,
             required : true,
             min : 1
+        },
+
+        postId:  
+
+        {  
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Post',
+           
         }
-});
+}, { timestamps: true });
 
-const Packs = mongoose.model('Packs',postSchema);
+packsSchema.post('save',async function(){
+      const idPost = String(this.postId);
+      await Post.findByIdAndUpdate({_id : idPost } , { $set : { packId : this._id }})
+})
 
-module.exports = Packs;
+const Pack = mongoose.model('Pack',packsSchema);
+
+module.exports = Pack;

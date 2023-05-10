@@ -12,7 +12,7 @@ const addPack = async (req,res)=>{
         
 }
 
-const getPack = async (req,res)=>{
+const getPackById = async (req,res)=>{
             try {
                 const pack = await Pack.findById(req.params.id);
                 res.json(pack).status(200);
@@ -21,7 +21,14 @@ const getPack = async (req,res)=>{
             }        
 }
 
-
+const getAllPack= async (req,res)=>{
+    try {
+        const pack = await Pack.find({});
+        res.json(pack).status(200);
+    }catch(err){
+        res.json(err).status(500);
+    }        
+}
 
 const updatePack = async (req,res)=>{
     try{
@@ -34,6 +41,7 @@ const updatePack = async (req,res)=>{
 
 module.exports ={
     addPack,
-    getPack,
-    updatePack
+    getPackById,
+    updatePack,
+    getAllPack
 }

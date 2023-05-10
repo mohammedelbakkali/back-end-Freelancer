@@ -15,8 +15,8 @@ const wishlistSchema = mongoose.Schema({
             type: mongoose.Schema.Types.String, 
             ref: 'post'
         }
-});
+} , { timestamps: true });
 
-const Wishlist = mongoose.model('Wishlist',postSchema);
+const Wishlist = mongoose.model('Wishlist',wishlistSchema);
 
 module.exports = Wishlist;
