@@ -6,7 +6,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getUserById = async (req,res,next,_id)=>{
    try{
     const id = new ObjectId(_id);
-    const user = await User.findById(id).populate('languages');
+    const user = await User.findById(id).populate('languages posts');
     
     if(!user){
         return res.status(400).json({message :"user not found !"})  

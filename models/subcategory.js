@@ -17,7 +17,7 @@ const subCategorySchema = mongoose.Schema({
 
       
   
-});
+},  { timestamps: true });
 
 subCategorySchema.post("save" ,async function(){
     
@@ -29,7 +29,7 @@ subCategorySchema.post("save" ,async function(){
  const a =  await     Category.findByIdAndUpdate({_id : CategoryId } , { $push: {subCategoryListId: this._id }} )      
  
     
-},  { timestamps: true });
+});
 
 const subCategory = mongoose.model('SubCategory',subCategorySchema);
 

@@ -60,6 +60,11 @@ const UserSchema = mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref:'Certification'
       }],
+
+      posts:[{ //posts == gigs
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Post'
+    }],
      
 
     
