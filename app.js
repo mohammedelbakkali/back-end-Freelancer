@@ -10,7 +10,7 @@ var authRouter = require('./routes/auth');
 var categoryRouter = require('./routes/category');
 var subCategoryRouter = require('./routes/subCategory');
 var packRouter = require('./routes/pack');
-
+var fs = require('fs');
 
 
 
@@ -21,16 +21,17 @@ var certificationRouter = require('./routes/certification');
 
 var http = require('http');
 var app = express();
-
+var multer = require('multer');
+var upload = multer();
 var  bodyParser  = require('body-parser');
 var  cors  = require('cors') ;
 var {mongoose} = require('mongoose');
 var { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer');
 const gql = require("graphql-tag");
 var { typeDefs , resolvers } = require('./graphql/schema');
-
+var {engine} = require('express-handlebars');
 const { startStandaloneServer } = require("@apollo/server/standalone");
-
+app.use(cors());
 
 mongoose.connect('mongodb://127.0.0.1/database',).then(()=>{
                 console.log('-> connexion to database ');
@@ -38,6 +39,27 @@ mongoose.connect('mongodb://127.0.0.1/database',).then(()=>{
                  console.log(err);
 });
 
+app.use(bodyParser.json());// pour convirtire le body en JSON 
+app.use(bodyParser.urlencoded({ extended: true }))// pour lire data se forme de key value
+// app.use(express.static(path.join(__dirname, 'pulic/product')));
+app.use(express.static('pulic'));
+app.use('/pulic', express.static('product'));
+
+
+app.get('/pulic/product/:imageName', (req, res) => {
+    const imageName = req.params.imageName;
+    const imagePath = path.join(__dirname, 'pulic/product', imageName);
+  
+    fs.readFile(imagePath, (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(404).send('Image not found');
+      } else {
+        res.contentType('image/jpeg'); // Set the appropriate content type
+        res.send(data);
+      }
+    });
+  });
 
 
 // view engine setup
@@ -45,12 +67,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors());
+
+
 
 app.use('/auth',authRouter);
 app.use('/post', postRouter);

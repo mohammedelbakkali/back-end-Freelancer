@@ -15,7 +15,7 @@ const packsSchema = mongoose.Schema({
             type  :String,
             required : true,
             minlength :10,
-            maxlength : 100,  
+            maxlength : 200,  
         },
         deliveryTime : {
             type : Date,
@@ -39,7 +39,7 @@ const packsSchema = mongoose.Schema({
 
 packsSchema.post('save',async function(){
       const idPost = String(this.postId);
-      await Post.findByIdAndUpdate({_id : idPost } , { $set : { packId : this._id }})
+      await Post.findByIdAndUpdate({_id : idPost } , { $push : { packId : this._id }})
 })
 
 const Pack = mongoose.model('Pack',packsSchema);

@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Joi  = require('joi');
-
+const multer = require('multer');
 const addData = async (req,res)=>{
         try {
 
@@ -10,10 +10,14 @@ const addData = async (req,res)=>{
                 subCategoryId:Joi.string().regex(/^[0-9a-fA-F]{24}$/),
                 Positivekeywords:Joi.array().items(Joi.string()),
                 description:Joi.string(),
-                status:Joi.string()
+                status:Joi.string(),
+                photo :Joi.string(),
+                userId:Joi.string()
             })
         
              const result = schemaGig.validate(req.body) 
+
+             
 
              if(result.error){
                 return res.status(400).json({ msg: 'Invalide data was provided', error: result.error.details[0].message });
@@ -32,7 +36,7 @@ const addData = async (req,res)=>{
 
 const getOneById = async (req,res)=>{
             try {
-                const post = await Post.findById(req.params.id).populate('CategoryId subCategoryId');
+                const post = await Post.findById(req.params.id).populate('CategoryId subCategoryId packId');
                 res.json(post).status(200);
             }catch(err){
                 res.json(err).status(500);
@@ -41,7 +45,7 @@ const getOneById = async (req,res)=>{
 
 const getAll = async (req,res)=>{
             try{
-                const posts = await Post.find({status : "active"}).populate('CategoryId subCategoryId');
+                const posts = await Post.find({status : "active"}).populate('CategoryId subCategoryId userId');
                 res.json(posts).status(200);
                 return posts;
             }catch(err){
