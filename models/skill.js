@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('../models/user')
 
 const skillSchema = mongoose.Schema({
    
@@ -11,11 +12,16 @@ const skillSchema = mongoose.Schema({
         enum :["beginner", "intermediate", "expert"],
         required: true
     },
-    user:{  //each skill is related to only one user
+    userId:{  //each skill is related to only one user
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     } //this property is optional to add in the schema
-      
+    
+})
+
+skillSchema.post('save',async function(){
+    let userId=String(this.userId);
+    await  User.findByIdAndUpdate({_id : userId},{$push :{skills:this._id}})
 })
 
 const Skill = mongoose.model('Skill', skillSchema);

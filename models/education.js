@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('../models/user')
 
 const educationSchema = mongoose.Schema({
 
@@ -20,7 +21,7 @@ const educationSchema = mongoose.Schema({
         required: true,
     },
     year: {
-        type: Date,
+        type: Number,
         required: true,
     },
     userId:{  //each educational diploma is related to only one user
@@ -30,5 +31,12 @@ const educationSchema = mongoose.Schema({
     
 })
 
+educationSchema.post('save',async function(){
+    let userId=String(this.userId) ;
+    await  User.findByIdAndUpdate({_id : userId},{$push :{education:this._id}})
+    
+})
+
 const Education = mongoose.model('Education', educationSchema);
 module.exports = Education
+

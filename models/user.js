@@ -40,7 +40,6 @@ const UserSchema = mongoose.Schema({
         enum:[ 0 , 1 , 2 ],
         default:0
       },
-      displayedName: String,
       description:{
           type:String
       },
@@ -63,7 +62,7 @@ const UserSchema = mongoose.Schema({
      
 
     
-},  { timestamps: true })
+},  {timestamps: true })
 
 UserSchema.virtual('password')
         .set(function(password){

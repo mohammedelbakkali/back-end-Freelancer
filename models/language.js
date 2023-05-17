@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../models/user')
+
 const languageSchema = mongoose.Schema({
 
     name:{
@@ -14,17 +15,16 @@ const languageSchema = mongoose.Schema({
     userId:{  //each language is related to only one user
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        index: true 
     }
 
 })
 
 
-
-
 languageSchema.post('save',async function(){
      let userId=String(this.userId) ;
-     await  User.findByIdAndUpdate({_id : userId},{$push :{languages:this._id}})
-     
+     await  User.findByIdAndUpdate({_id : userId},{$push :{languages:this._id}})  // find the user with the exact ID that we got and update the 
+                                                                                 //  array 'languages' with the newest language   
 })
 
 const Language = mongoose.model('Language', languageSchema);
