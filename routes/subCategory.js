@@ -5,6 +5,6 @@ const {
 } = require('../controllers/sebCategory')
 
 router.route('').post(addSubCategory).get(getAllSubCategory)
-router.route(':id').get(getOneSubCategory)
+router.route('/:id').get(getOneSubCategory)
 
 module.exports = router;

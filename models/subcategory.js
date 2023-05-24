@@ -13,7 +13,11 @@ const subCategorySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
        
-    }
+    },
+    posts:[{ //posts == gigs
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Post'
+    }],
 
       
   

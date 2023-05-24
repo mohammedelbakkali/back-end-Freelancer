@@ -45,7 +45,7 @@ const getOneById = async (req,res)=>{
 
 const getAll = async (req,res)=>{
             try{
-                const posts = await Post.find({status : "active"}).populate('CategoryId subCategoryId userId');
+                const posts = await Post.find({status : "active"}).populate('CategoryId subCategoryId userId packId');
                 res.json(posts).status(200);
                 return posts;
             }catch(err){

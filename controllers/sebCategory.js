@@ -13,7 +13,7 @@ const addSubCategory =async (req,res)=>{
 
 getOneSubCategory = async (req, res)=>{
      try{
-        const data = await SubCategory.findById(req.params.id);
+        const data = await SubCategory.findById(req.params.id).populate('posts');
         res.send(data).status(200)
 
      }catch(err){

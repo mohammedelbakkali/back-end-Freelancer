@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Category = require('../models/category')
+const subCategory = require('../models/subcategory')
 const User = require("../models/user")
 const postSchema = mongoose.Schema({
 
@@ -65,12 +66,15 @@ const postSchema = mongoose.Schema({
 postSchema.post("save" ,async function(){
     
     var  userId = String(this.userId);
-    console.log(userId)
+    var  CategoryId = String(this.CategoryId);
+    var  subCategoryId = String(this.subCategoryId);
 
-   
-       
+    console.log(userId)
+  
  const a =  await  User.findByIdAndUpdate({_id : userId } , { $push: {posts: this._id }} )      
- 
+  const b =  await  Category.findByIdAndUpdate({_id : CategoryId } , { $push: {posts: this._id }} )      
+ const c =  await  subCategory.findByIdAndUpdate({_id : subCategoryId } , { $push: {posts: this._id }} )      
+
     
 });
 
