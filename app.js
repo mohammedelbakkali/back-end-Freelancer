@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var categoryRouter = require('./routes/category');
 var subCategoryRouter = require('./routes/subCategory');
+var startsRouter = require('./routes/stars')
 var packRouter = require('./routes/pack');
 var fs = require('fs');
 
@@ -78,6 +79,8 @@ app.use('/users', usersRouter);
 app.use('/category',categoryRouter);
 app.use('/subcategory',subCategoryRouter);
 app.use('/pack',packRouter);
+
+app.use('/reviews',startsRouter)
 
 app.use('/language',languageRouter);
 app.use('/skill', skillRouter);
