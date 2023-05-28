@@ -64,7 +64,19 @@ const UserSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'Post'
     }],
-     
+
+    messages:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'message'
+    }
+     ],
+
+     rooms:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'room'
+    }
+     ]
+
 
     
 },  {timestamps: true })

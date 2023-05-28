@@ -12,12 +12,14 @@ var subCategoryRouter = require('./routes/subCategory');
 var packRouter = require('./routes/pack');
 var fs = require('fs');
 
-
+var socket = require('socket.io');
 
 var languageRouter = require('./routes/language');
 var skillRouter = require('./routes/skill');
 var educationRouter = require('./routes/education');
 var certificationRouter = require('./routes/certification');
+var roomRouter = require('./routes/room');
+
 
 var http = require('http');
 var app = express();
@@ -31,7 +33,20 @@ const gql = require("graphql-tag");
 var { typeDefs , resolvers } = require('./graphql/schema');
 var {engine} = require('express-handlebars');
 const { startStandaloneServer } = require("@apollo/server/standalone");
+
+
+
+var server = http.createServer(app);
+var socketIO = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST"]
+  }
+});
+
+
 app.use(cors());
+
 
 mongoose.connect('mongodb://127.0.0.1/database',).then(()=>{
                 console.log('-> connexion to database ');
@@ -83,10 +98,10 @@ app.use('/language',languageRouter);
 app.use('/skill', skillRouter);
 app.use('/education', educationRouter);
 app.use('/certification', certificationRouter);
+app.use('/room',roomRouter)
 
 
-
-const httpServer = http.createServer(app);
+// const http = http.createServer(app);
 
 
       
@@ -99,6 +114,31 @@ const httpServer = http.createServer(app);
 // });
 
 
-app.listen(4000);
 
-// module.exports = app;
+
+// Set up a socket connection event handler
+socketIO.on('connection', (socket) => {
+  console.log('User connected');
+
+  // Handle chat message event
+  socket.on('chat message', (msg) => {
+     
+    console.log('Message:', msg.message);
+    console.log(msg)
+
+    // Broadcast the message to all connected clients
+    socketIO.emit('chat message', msg);
+  });
+
+  // Handle disconnect event
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
+
+
+server.listen(4000,()=>{
+  console.log('listening on 3000')
+})
+
+module.exports = app;
