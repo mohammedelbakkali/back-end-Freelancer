@@ -13,7 +13,6 @@ const addData =async (req,res)=>{
      }catch(err){
         res.send(err).status(500);
      }
-
 }
 
 const getAll = async (req,res)=>{
