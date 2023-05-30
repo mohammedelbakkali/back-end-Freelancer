@@ -63,33 +63,30 @@ const UserSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'Post'
 
-    }],
-
-    messages:[{
-      type: mongoose.Schema.Types.ObjectId,
-      ref:'message'
-    }
-     ],
-
-     rooms:[{
-      type: mongoose.Schema.Types.ObjectId,
-      ref:'room'
-    }
-     ],
-
-
-     
-      reviews:[{ //posts == gigs
+      }],
+      wishlist:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Wishlist'
+      }],
+      reviews:[{ 
         type: mongoose.Schema.Types.ObjectId,
         ref:'Stars'
       }],
-
       friends:[{
         type: mongoose.Schema.Types.ObjectId,
         ref:'friends'
       }],
+     messages:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'message'
+      }
+      ],
+      rooms:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'room'
+      }
+      ],
 
-      
       
      
 

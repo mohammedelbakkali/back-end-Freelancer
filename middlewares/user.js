@@ -6,7 +6,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getUserById = async (req,res,next,_id)=>{
    try{
     const id = new ObjectId(_id);
-    const user = await User.findById(id).populate('languages skills education certifications posts')
+    const user = await User.findById(id).populate('languages skills education certifications posts wishlist')
 
     
     if(!user){
