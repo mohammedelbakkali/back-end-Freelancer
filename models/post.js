@@ -35,7 +35,7 @@ const postSchema = mongoose.Schema({
     status :{
         type  :String,
         default :'active',
-        enum : ['active','inactive']
+        enum : ['active','inactive',"archive"]
     },
     userId:{  
         type: mongoose.Schema.Types.ObjectId,
@@ -45,6 +45,10 @@ const postSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Stars',
     }],
+    Faqs:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Faq'
+      }],
         
 
 }, { timestamps: true });

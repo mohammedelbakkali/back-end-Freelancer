@@ -51,7 +51,7 @@ const getOneById = async (req,res)=>{
                                 model: 'Skill',
                             }
                         })
-                        .populate('CategoryId subCategoryId packId reviews');
+                        .populate('CategoryId subCategoryId packId reviews Faqs');
                 res.json(post).status(200);
             }catch(err){
                 res.json(err).status(500);
@@ -60,7 +60,7 @@ const getOneById = async (req,res)=>{
 
 const getAll = async (req,res)=>{
             try{
-                const posts = await Post.find({status : "active"}).populate('CategoryId subCategoryId userId packId reviews');
+                const posts = await Post.find({status : "active"}).populate('CategoryId subCategoryId userId packId reviews Faqs');
                 res.json(posts).status(200);
                 return posts;
             }catch(err){

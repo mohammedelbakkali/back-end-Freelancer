@@ -3,10 +3,11 @@ const router = express.Router();
 const {
     addCategory,
     getOneCategory,
-    getAllCategory
+    getAllCategory,
+    update
 } = require('../controllers/category')
 
 router.route('').post(addCategory).get(getAllCategory)
-router.route('/:id').get(getOneCategory)
+router.route('/:id').get(getOneCategory).patch(update)
 
 module.exports = router;

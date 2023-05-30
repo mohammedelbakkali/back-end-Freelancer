@@ -20,6 +20,8 @@ var skillRouter = require('./routes/skill');
 var educationRouter = require('./routes/education');
 var certificationRouter = require('./routes/certification');
 var roomRouter = require('./routes/room');
+var friendsRouter = require('./routes/friends');
+var faqRouter = require('./routes/faq');
 
 
 var http = require('http');
@@ -101,8 +103,9 @@ app.use('/language',languageRouter);
 app.use('/skill', skillRouter);
 app.use('/education', educationRouter);
 app.use('/certification', certificationRouter);
-app.use('/room',roomRouter)
-
+app.use('/room',roomRouter);
+app.use('/friends',friendsRouter);
+app.use('/faq',faqRouter);
 
 // const http = http.createServer(app);
 

@@ -83,6 +83,14 @@ const UserSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'Stars'
       }],
+
+      friends:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'friends'
+      }],
+
+      
+      
      
 
     

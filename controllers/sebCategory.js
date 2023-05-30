@@ -31,6 +31,17 @@ getAllSubCategory = async (req, res)=>{
     }
 }
 
+const update = async (req,res)=>{
+    try{
+        const subCategory = await SubCategory.findByIdAndUpdate(req.params.id,req.body,{new:true});
+        res.json(SubCategory).status(200);
+    }catch(err){
+        res.json(SubCategory).status(500);
+    }
+}
+
+
 module.exports = {
-    addSubCategory,getOneSubCategory,getAllSubCategory
+    addSubCategory,getOneSubCategory,getAllSubCategory,update
+    
 }

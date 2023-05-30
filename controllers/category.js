@@ -31,8 +31,19 @@ getAllCategory = async (req, res)=>{
     }
 }
 
+const update = async (req,res)=>{
+    try{
+        const category = await Category.findByIdAndUpdate(req.params.id,req.body,{new:true});
+        res.json(category).status(200);
+    }catch(err){
+        res.json(category).status(500);
+    }
+}
+
+
 
 
 module.exports = {
-    addCategory,getOneCategory,getAllCategory
+    addCategory,getOneCategory,getAllCategory,update
+    
 }

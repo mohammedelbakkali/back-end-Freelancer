@@ -1,19 +1,30 @@
 const mongoose = require('mongoose');
-
+const Post = require('../models/post')
 
 const faqSchema = mongoose.Schema({
     question : {
         type : String,
-        required : true
+      
     },
-    answer : {
+    response : {
         type : String,
-        required : true,
-        minlength : 5,
-        maxlenght: 300
-    }
+
+    },
+    postId:{  
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+    },
 }, { timestamps: true });
 
-const Faq = mongoose.model('Faq',postSchema);
+faqSchema.post("save" ,async function(){
+    
+    var  postId = String(this.postId);
+
+    const a =  await  Post.findByIdAndUpdate({_id : postId } , { $push: {Faqs: this._id }} )      
+ 
+    
+});
+
+const Faq = mongoose.model('Faq',faqSchema);
 
 module.exports = Faq;
