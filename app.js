@@ -20,7 +20,7 @@ var skillRouter = require('./routes/skill');
 var educationRouter = require('./routes/education');
 var certificationRouter = require('./routes/certification');
 var roomRouter = require('./routes/room');
-
+var wishlistRouter = require('./routes/wishlist');
 
 var http = require('http');
 var app = express();
@@ -94,9 +94,8 @@ app.use('/users', usersRouter);
 app.use('/category',categoryRouter);
 app.use('/subcategory',subCategoryRouter);
 app.use('/pack',packRouter);
-
-app.use('/reviews',startsRouter)
-
+app.use('/reviews',startsRouter);
+app.use('/wishlist',wishlistRouter);
 app.use('/language',languageRouter);
 app.use('/skill', skillRouter);
 app.use('/education', educationRouter);
@@ -115,6 +114,80 @@ app.use('/room',roomRouter)
 // }).then(({ url }) => {
 //   console.log(`Server ready at ${url}`);
 // });
+
+
+
+
+
+
+
+
+
+
+
+
+// STRIPE:
+require('dotenv').config()
+
+
+//CORS which is already configured :  It is a security feature implemented by browsers to prevent unauthorized cross-origin requests.
+//CORS allows server owners to specify who can access their resources by setting appropriate HTTP headers in the server's response
+
+//BODY-PARSER which is already configured :The main purpose of body-parser is to handle different types of request bodies and convert them into a usable format. 
+//It supports various formats, including JSON, URL-encoded data, raw text, and multipart/form-data (used for file uploads)
+
+app.use(express.static("public"))
+app.use(cors({origin: true,credentials: true}))
+
+const stripe = require("stripe")("sk_test_51ND7qgBU1CNygU20VVi5dSi9xzLAX2MDAqkaCCMAfZVvY4RmkErpmPS8l74vhpHAB8RgGCbbm6ky4T721OYrGTQM00J5t9KAGW")
+
+function calculateAmount(product) {
+  // Calculate the payment amount based on the product information
+  return product.price * 100; // Assuming the price is in dollars, convert it to cents
+}
+
+app.post("/checkout", async(req, res, next) => {
+  const { order } = req.body; 
+  console.log(req.body);
+  const amount = order.price * 100;
+  console.log(amount);
+  try {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [{
+
+        price_data: {
+          currency: 'usd',
+          unit_amount: amount,
+          product_data: {
+            name: order.name,
+            description: order.description,
+            
+          },
+        },
+        quantity: 1,
+        // {
+        //   // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        //   amount,
+        //   quantity: 1,
+        // },
+    }],
+      mode: 'payment',
+      success_url: "http://localhost:4000/success.html",
+      cancel_url: "http://localhost:4000/cancel.html",
+    });
+    res.status(200).json(session);
+  } catch (error) {
+    next(error);
+  }
+  
+})
+
+
+
+
+
+
+
 
 
 
@@ -141,7 +214,8 @@ socketIO.on('connection', (socket) => {
 
 
 server.listen(4000,()=>{
-  console.log('listening on 3000')
+  console.log('listening on 4000')
 })
 
 module.exports = app;
+
